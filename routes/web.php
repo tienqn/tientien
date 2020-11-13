@@ -18,7 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-	$ems= \DB::select('select * from employees');
+	// $ems= \DB::select('select * from employees');
+	$ems= \DB::select('select * from departments');
 	dd($ems);
     return 'test';
 });
