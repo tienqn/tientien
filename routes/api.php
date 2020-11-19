@@ -25,26 +25,44 @@ $path = Storage::disk('s3')->put('images/originals', $request->file, 'public');
 return response()->json($path);
 });
 
-Route::get('/data', function(Request $request) {
-	
-	$salaries = DB::select('select * from salaries  limit 10000');
-	
+Route::get('/cache', function(Request $request) {
 	$employees = Redis::get('employees');
-	if(Redis::exists('employees')) {
-		$expires = Redis::ttl('employees');
+	$salaries = Redis::get('salaries');
+
+	if(Redis::exists('employees') && Redis::exists('salaries')) {
+		$expire_employees = Redis::ttl('employees');
+		$expire_salaries = Redis::ttl('salaries');
 
 		return response()->json([
 			'data' => [
-				'employees' => $employees,
-				'salaries' => $salaries,
-				'expires' => $expires,
+				'employees' => json_decode($employees),
+				'salaries' => json_decode($salaries),
+				'expire_employees' => $expire_employees,
+				'expire_salaries' => $expire_salaries,
 			]
 		]);
 	}
 
 	$employees = DB::select('select * from employees  limit 10000');
 	Redis::set('employees', json_encode($employees));
-	Redis::expire('employees', 30000);
+	Redis::expire('employees', 900000);
+
+	$salaries = DB::select('select * from salaries  limit 10000');
+	Redis::set('salaries', json_encode($salaries));
+	Redis::expire('salaries', 900000);
+	
+	return response()->json([
+		'data' => [
+			'employees' => $employees,
+			'salaries' => $salaries
+		]
+	]);
+});
+
+Route::get('/nocache', function(Request $request) {
+	
+	$salaries = DB::select('select * from salaries  limit 10000');
+	$employees = DB::select('select * from employees  limit 10000');
 	
 	return response()->json([
 		'data' => [
