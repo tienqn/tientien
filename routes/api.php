@@ -25,7 +25,7 @@ return response()->json($path);
 });
 
 Route::get('/users', function(Request $request) {
-	$users = \App\Models\User::all();
-	
+	$users = DB::select('select * from dept_manager');
+
 	return response()->json($users);
 });
