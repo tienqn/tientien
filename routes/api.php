@@ -19,8 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/upload', function(Request $request) {
-	dd($request->file);
+Route::post('/upload', function(Request $request) {
 $path = Storage::disk('s3')->put('images/originals', $request->file, 'public');
 return response()->json($path);
 });
