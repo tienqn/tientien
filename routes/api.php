@@ -25,7 +25,8 @@ return response()->json($path);
 });
 
 Route::get('/users', function(Request $request) {
-	$users = DB::select('select * from dept_manager');
+	$users = DB::select('select * from employees  limit 10000');
+$users2 = DB::select('select * from salaries  limit 10000');
 
 	return response()->json($users);
 });
