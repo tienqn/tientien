@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/upload', function(Request $request) {
+$path = Storage::disk('s3')->put('images/originals', $request->file, 'public');
+return response()->json($path);
+});
