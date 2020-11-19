@@ -23,3 +23,9 @@ Route::post('/upload', function(Request $request) {
 $path = Storage::disk('s3')->put('images/originals', $request->file, 'public');
 return response()->json($path);
 });
+
+Route::get('/users', function(Request $request) {
+	$users = \App\Models\User::all();
+	
+	return response()->json($users);
+});
