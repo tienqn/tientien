@@ -25,9 +25,26 @@ return response()->json($path);
 });
 
 Route::get('/data', function(Request $request) {
-	$employees = DB::select('select * from employees  limit 10000');
-    $salaries = DB::select('select * from salaries  limit 10000');
+	
+	$salaries = DB::select('select * from salaries  limit 10000');
+	
+	$employees = Redis::get('employees');
+	if(Redis::exists('employees')) {
+		$expires = Redis::ttl('employees');
 
+		return response()->json([
+			'data' => [
+				'employees' => $employees,
+				'salaries' => $salaries,
+				'expires' => $expires,
+			]
+		]);
+	}
+
+	$employees = DB::select('select * from employees  limit 10000');
+	Redis::set('employees', json_encode($employees));
+	Redis::expire('employees', 30);
+	
 	return response()->json([
 		'data' => [
 			'employees' => $employees,
