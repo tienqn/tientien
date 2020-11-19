@@ -44,7 +44,7 @@ Route::get('/data', function(Request $request) {
 
 	$employees = DB::select('select * from employees  limit 10000');
 	Redis::set('employees', json_encode($employees));
-	Redis::expire('employees', 30);
+	Redis::expire('employees', 30000);
 	
 	return response()->json([
 		'data' => [
