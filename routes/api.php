@@ -24,9 +24,14 @@ $path = Storage::disk('s3')->put('images/originals', $request->file, 'public');
 return response()->json($path);
 });
 
-Route::get('/users', function(Request $request) {
-	$users = DB::select('select * from employees  limit 10000');
-$users2 = DB::select('select * from salaries  limit 10000');
+Route::get('/data', function(Request $request) {
+	$employees = DB::select('select * from employees  limit 10000');
+    $salaries = DB::select('select * from salaries  limit 10000');
 
-	return response()->json($users);
+	return response()->json([
+		'data' => [
+			'employees' => $employees,
+			'salaries' => $salaries
+		]
+	]);
 });
