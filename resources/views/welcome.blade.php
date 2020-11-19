@@ -11,7 +11,7 @@
 		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 		<script>
-        function getMessage() {
+        // function getMessage() {
             $.ajax({
                type:'get',
                url:'api/data',
@@ -20,7 +20,7 @@
                   console.log(data.data);
                }
             });
-         }
+        //  }
       </script>
         <!-- Styles -->
         <style>
