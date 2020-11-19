@@ -17,7 +17,8 @@
                url:'api/data',
                data:'_token = <?php echo csrf_token() ?>',
                success:function(data) {
-                  console.log(data.data);
+                //   console.log(data.data);
+				$('.loader').hide();
                }
             });
         //  }
@@ -31,9 +32,24 @@
             body {
                 font-family: 'Nunito';
             }
+
+			.loader {
+				border: 16px solid #f3f3f3; /* Light grey */
+				border-top: 16px solid #3498db; /* Blue */
+				border-radius: 50%;
+				width: 120px;
+				height: 120px;
+				animation: spin 2s linear infinite;
+			}
+
+			@keyframes spin {
+				0% { transform: rotate(0deg); }
+				100% { transform: rotate(360deg); }
+			}	
         </style>
     </head>
     <body class="antialiased">
         hi im tienpham
+		<div class="loader"></div>
     </body>
 </html>
