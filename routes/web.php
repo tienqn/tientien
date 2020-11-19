@@ -16,7 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/cache', function () {
+    return view('cache');
+});
+Route::get('/nocache', function () {
+    return view('nocache');
+});
 Route::get('/test', function () {
 	// $ems= \DB::select('select * from employees');
 	$ems= \DB::select('select * from departments');

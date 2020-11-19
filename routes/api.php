@@ -53,6 +53,7 @@ Route::get('/cache', function(Request $request) {
 	
 	return response()->json([
 		'data' => [
+			'cache' => false,
 			'employees' => $employees,
 			'salaries' => $salaries
 		]
