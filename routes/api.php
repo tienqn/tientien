@@ -72,3 +72,8 @@ Route::get('/nocache', function(Request $request) {
 		]
 	]);
 });
+
+Route::get('/v1/welcome', function(Request $request) {
+	
+	return response()->json("Helloo!! how are you?");
+});
